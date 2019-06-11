@@ -1,7 +1,9 @@
 /**
  * Main application file
  */
-
+require('babel-core').transform('code', {
+    plugins: ['dynamic-import-node']
+});
 import express from 'express';
 import mongoose from 'mongoose';
 mongoose.Promise = require('bluebird');
