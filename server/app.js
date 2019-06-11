@@ -1,6 +1,7 @@
 /**
  * Main application file
  */
+require('babel-register');
 require('babel-core').transform('code', {
     plugins: ['dynamic-import-node']
 });
