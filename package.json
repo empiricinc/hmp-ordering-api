@@ -146,8 +146,8 @@
     "zone.js": "^0.8.12"
   },
   "engines": {
-    "node": ">=6.x.x",
-    "npm": ">=3.9.5"
+    "node": "<=10.x.x",
+    "npm": "<=3.9.5"
   },
   "scripts": {
     "build": "gulp build",
