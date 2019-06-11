@@ -7,6 +7,7 @@
         }]
     ],
     "plugins": [
+      "dynamic-import-node",
       "transform-flow-comments",
       "transform-runtime",
       "transform-decorators-legacy"
