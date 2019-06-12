@@ -196,6 +196,12 @@ gulp.task('apidoc', (done)=>{
       dest: "apidoc/"
     },done);
 });
+gulp.task('apidoc:dist', (done)=>{
+    apidoc({
+      src: "server/",
+      dest: "dist/apidoc/"
+    },done);
+});
 gulp.task('inject:scss', () => {
     return gulp.src(paths.client.mainStyle)
         .pipe(plugins.inject(
