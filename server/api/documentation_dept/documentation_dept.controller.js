@@ -108,7 +108,12 @@ export function index(req, res) {
  **/
 // Gets a single DocumentationDept from the DB
 export function show(req, res) {
-    return DocumentationDept.findById(req.params.id).populate('order').exec()
+    return DocumentationDept.findById(req.params.id).populate({
+        path:'order',model:'Order',
+        populate:[{path:'documentation_team',model:'DocumentationDept'},
+        {path:'quarantine_team',model:'QuarantineDept'},
+        {path:'production_team',model:'ProductionDept'}],
+    }).exec()
     .then(handleEntityNotFound(res))
         .then(respondWithResult(res))
         .catch(handleError(res));
