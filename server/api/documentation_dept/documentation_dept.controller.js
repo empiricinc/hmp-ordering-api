@@ -81,8 +81,7 @@ export function index(req, res) {
     const {status='pending'}=req.query;
     return DocumentationDept.find({status}).populate({
         path:'order',model:'Order',
-        populate:[{path:'documentation_team',model:'DocumentationDept'},
-        {path:'quarantine_team',model:'QuarantineDept'},
+        populate:[{path:'quarantine_team',model:'QuarantineDept'},
         {path:'production_team',model:'ProductionDept'}],
     }).exec()
         .then(respondWithResult(res))
@@ -110,8 +109,7 @@ export function index(req, res) {
 export function show(req, res) {
     return DocumentationDept.findById(req.params.id).populate({
         path:'order',model:'Order',
-        populate:[{path:'documentation_team',model:'DocumentationDept'},
-        {path:'quarantine_team',model:'QuarantineDept'},
+        populate:[{path:'quarantine_team',model:'QuarantineDept'},
         {path:'production_team',model:'ProductionDept'}],
     }).exec()
     .then(handleEntityNotFound(res))
