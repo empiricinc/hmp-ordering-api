@@ -8,7 +8,7 @@ var ProductionDeptSchema = new mongoose.Schema({
   packaging: String,
   vehicle_availability: Boolean ,
   vehicle_information:String, 
-  time: Date,
+  time: String,
   hot_weight: String ,
   loading_weight: String ,
   documents_weight: String ,
