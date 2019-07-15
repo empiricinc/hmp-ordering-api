@@ -10,6 +10,7 @@
 
 import { applyPatch } from 'fast-json-patch';
 import Order from './order.model';
+import OrderItems from './order_items.model';
 import DocumentationDept from '../documentation_dept/documentation_dept.model';
 import ProductionDept from '../production_dept/production_dept.model';
 import QuarantineDept from '../quarantine_dept/quarantine_dept.model';
@@ -86,6 +87,7 @@ export function index(req, res) {
     const {isApprove=false} = req.query;
 
     return Order.find({isApprove})
+    .populate('order_items')
     .populate('documentation_team')
     .populate('quarantine_team')
     .populate('production_team')
@@ -141,10 +143,19 @@ export function show(req, res) {
  */
 // Creates a new Order in the DB
 export function create(req, res) {
-    req.body.isApprove = false;
-    return Order.create(req.body)
-        .then(respondWithResult(res, 201))
-        .catch(handleError(res));
+  req.body.isApprove = false;
+  let order = req.body;
+  order._id = new mongoose.Types.ObjectId();
+  let orderItems = req.body.order_items.map((item)=>{
+    item.order_id = order._id;
+    item._id = new mongoose.Types.ObjectId();
+    return item;
+  });
+  const itemIds = orderItems.map(item=>item._id);
+  order.order_items = itemIds;
+  return Promise.all([Order.create(order),OrderItems.create(orderItems)])
+    .then(respondWithResult(res, 201))
+    .catch(handleError(res));
 }
 // Upserts the given Order in the DB at the specified ID
 export function upsert(req, res) {
