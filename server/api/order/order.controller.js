@@ -205,6 +205,29 @@ export async function approve(req, res) {
         .then(respondWithResult(res))
         .catch(handleError(res));
 }
+export async function approveAll(req, res) {
+    const orderdata = await Order.find({isApprove:false});
+    
+    let toCreate = orderdata.map(orderinfo=>{return {order:orderinfo._id,status:'pending',_id:new mongoose.Types.ObjectId()}});
+    await Promise.all([
+        DocumentationDept.create(toCreate),
+        ProductionDept.create(toCreate),
+        QuarantineDept.create(toCreate)
+    ]);
+    let toUpdate = [];
+    toCreate.forEach((item)=>{
+        toUpdate.push( Order.updateOne({_id:item.order}, {
+            isApprove:true,
+            documentation_team: item._id,
+            production_team:item._id,
+            quarantine_team: item._id,
+        }).exec());
+    })
+    return Promise.all(toUpdate)
+        .then(respondWithResult(res))
+        .catch(handleError(res));
+}
+
 /**
  * @api {patch} /api/order/:id Update Order
  * @apiName UpdateOrder
