@@ -13,6 +13,7 @@ var DocumentationDeptSchema = new mongoose.Schema({
   form_e:String,
   driver_name:String,
   status: String,
+  flight_booked: String,
   order: { type: Schema.Types.ObjectId, ref: 'Order' },
 },{
   timestamps: true
