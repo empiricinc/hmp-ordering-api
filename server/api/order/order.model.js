@@ -15,6 +15,7 @@ var OrderSchema = new mongoose.Schema({
   documentation_team: { type: Schema.Types.ObjectId, ref: 'DocumentationDept' },
   production_team: { type: Schema.Types.ObjectId, ref: 'ProductionDept' },
   quarantine_team: { type: Schema.Types.ObjectId, ref: 'QuarantineDept' },
+  order_items: [{ type: Schema.Types.ObjectId, ref: 'OrderItems' }]
 },{
   timestamps: true
 });
