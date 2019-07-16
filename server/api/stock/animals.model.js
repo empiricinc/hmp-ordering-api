@@ -6,6 +6,7 @@ var StockSchema = new mongoose.Schema({
   stock_id: { type: Schema.Types.ObjectId, ref: 'Stock' },
   type:String,
   tag:String,
+  quantity: Number,
   weight_in_kg:Number,
   weight:Number,
   weight_unit:String
