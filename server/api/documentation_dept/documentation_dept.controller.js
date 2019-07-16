@@ -110,7 +110,9 @@ export function show(req, res) {
     return DocumentationDept.findById(req.params.id).populate({
         path:'order',model:'Order',
         populate:[{path:'quarantine_team',model:'QuarantineDept'},
-        {path:'production_team',model:'ProductionDept'}],
+        {path:'production_team',model:'ProductionDept'}
+        {path:'order_items',model:'OrderItems'}
+    ],
     }).exec()
     .then(handleEntityNotFound(res))
         .then(respondWithResult(res))
