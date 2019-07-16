@@ -13,8 +13,8 @@ import QuarantineDept from './quarantine_dept.model';
 
 function respondWithResult(res, statusCode) {
     statusCode = statusCode || 200;
-    return function(entity) {
-        if(entity) {
+    return function (entity) {
+        if (entity) {
             return res.status(statusCode).json(entity);
         }
         return null;
@@ -22,10 +22,10 @@ function respondWithResult(res, statusCode) {
 }
 
 function patchUpdates(patches) {
-    return function(entity) {
+    return function (entity) {
         try {
             applyPatch(entity, patches, /*validate*/ true);
-        } catch(err) {
+        } catch (err) {
             return Promise.reject(err);
         }
 
@@ -34,8 +34,8 @@ function patchUpdates(patches) {
 }
 
 function removeEntity(res) {
-    return function(entity) {
-        if(entity) {
+    return function (entity) {
+        if (entity) {
             return entity.remove()
                 .then(() => res.status(204).end());
         }
@@ -43,8 +43,8 @@ function removeEntity(res) {
 }
 
 function handleEntityNotFound(res) {
-    return function(entity) {
-        if(!entity) {
+    return function (entity) {
+        if (!entity) {
             res.status(404).end();
             return null;
         }
@@ -54,7 +54,7 @@ function handleEntityNotFound(res) {
 
 function handleError(res, statusCode) {
     statusCode = statusCode || 500;
-    return function(err) {
+    return function (err) {
         res.status(statusCode).send(err);
     };
 }
@@ -72,11 +72,13 @@ function handleError(res, statusCode) {
  **/
 // Gets a list of QuarantineDepts
 export function index(req, res) {
-    const {status='pending'}=req.query;
-    return QuarantineDept.find({status}).populate({
-        path:'order',model:'Order',
-        populate:[{path:'documentation_team',model:'DocumentationDept'},
-        {path:'production_team',model:'ProductionDept'}],
+    const { status = 'pending' } = req.query;
+    return QuarantineDept.find({ status }).populate({
+        path: 'order', model: 'Order',
+        populate: [
+            { path: 'order_items', model: 'OrderItems' },
+            { path: 'documentation_team', model: 'DocumentationDept' },
+            { path: 'production_team', model: 'ProductionDept' }],
     }).exec()
         .then(respondWithResult(res))
         .catch(handleError(res));
@@ -96,11 +98,13 @@ export function index(req, res) {
 // Gets a single QuarantineDept from the DB
 export function show(req, res) {
     return QuarantineDept.findById(req.params.id).populate({
-        path:'order',model:'Order',
-        populate:[{path:'documentation_team',model:'DocumentationDept'},
-        {path:'production_team',model:'ProductionDept'}],
+        path: 'order', model: 'Order',
+        populate: [
+            { path: 'order_items', model: 'OrderItems' },
+            { path: 'documentation_team', model: 'DocumentationDept' },
+            { path: 'production_team', model: 'ProductionDept' }],
     }).exec()
-    .then(handleEntityNotFound(res))
+        .then(handleEntityNotFound(res))
         .then(respondWithResult(res))
         .catch(handleError(res));
 }
@@ -108,16 +112,16 @@ export function show(req, res) {
 // Creates a new QuarantineDept in the DB
 export function create(req, res) {
     return QuarantineDept.create(req.body)
-    .then(respondWithResult(res, 201))
+        .then(respondWithResult(res, 201))
         .catch(handleError(res));
 }
 
 // Upserts the given QuarantineDept in the DB at the specified ID
 export function upsert(req, res) {
-    if(req.body._id) {
+    if (req.body._id) {
         Reflect.deleteProperty(req.body, '_id');
     }
-    return QuarantineDept.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
+    return QuarantineDept.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true }).exec()
         .then(respondWithResult(res))
         .catch(handleError(res));
 }
@@ -140,7 +144,7 @@ export function upsert(req, res) {
  **/
 // Updates an existing QuarantineDept in the DB
 export function patch(req, res) {
-    if(req.body._id) {
+    if (req.body._id) {
         Reflect.deleteProperty(req.body, '_id');
     }
     return QuarantineDept.findById(req.params.id).exec()
