@@ -61,7 +61,10 @@ function handleError(res, statusCode) {
 
 // Gets a list of Drivers
 export function index(req, res) {
-    return Driver.find().exec()
+    return Driver.find().populate({
+        path:'order',model:'Order',
+        populate: [{ path: 'order_items', model: 'OrderItems' }],
+    }).exec()
         .then(respondWithResult(res))
         .catch(handleError(res));
 }
