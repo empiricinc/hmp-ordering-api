@@ -8,6 +8,7 @@ import express from 'express';
 
 export default function(app) {
     // Insert routes below
+    app.use('/api/drivers', require('./api/driver'));
     app.use('/api/production_dept', require('./api/production_dept'));
     app.use('/api/quarantine_dept', require('./api/quarantine_dept'));
     app.use('/api/doc_team', require('./api/documentation_dept'));
