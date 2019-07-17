@@ -7,6 +7,7 @@ var StockSchema = new mongoose.Schema({
   quantity: Number,
   gate: String,
   vehicle: String,
+  type:String, //stock-in \\ stock-out
   mandi: String,
   procured_by : String,
   grn: String,
