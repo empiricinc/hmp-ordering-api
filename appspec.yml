@@ -1,18 +1,23 @@
-version: 0.0
-os: linux
-files:
-  - source: /
+--- 
+files: 
+  - 
     destination: /home/ubuntu/hmp-ordering-api
-hooks:
-  BeforeInstall:
-    - location: scripts/stop_server.sh
-      timeout: 30
+    source: /
+hooks: 
+  AfterInstall: 
+    - 
+      location: scripts/build_code.sh
       runas: root
-  AfterInstall:
-    - location: scripts/build_code.sh
       timeout: 60
+  ApplicationStart: 
+    - 
+      location: scripts/start_server.sh
       runas: root
-  ApplicationStart:
-    - location: scripts/start_server.sh
       timeout: 30
+  BeforeInstall: 
+    - 
+      location: scripts/stop_server.sh
       runas: root
+      timeout: 30
+os: linux
+version: 0.0
