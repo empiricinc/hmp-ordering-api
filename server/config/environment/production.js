@@ -16,9 +16,6 @@ module.exports = {
     // MongoDB connection options
     mongo: {
         useMongoClient: true,
-        uri: process.env.MONGODB_URI
-            || process.env.MONGOHQ_URL
-            || process.env.OPENSHIFT_MONGODB_DB_URL + process.env.OPENSHIFT_APP_NAME
-            || 'mongodb://localhost/hmporderingapi'
+        uri: 'mongodb://admin:12Haseeb3@cluster0-shard-00-00-to6u8.mongodb.net:27017,cluster0-shard-00-01-to6u8.mongodb.net:27017,cluster0-shard-00-02-to6u8.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority',
     }
 };
