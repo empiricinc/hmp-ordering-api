@@ -16,7 +16,7 @@ var cors = require('node-cors');
 import expressConfig from './config/express';
 import registerRoutes from './routes';
 import seedDatabaseIfNeeded from './config/seed';
-var whiteList = ['www.example.com', 'www.example.cn'];;
+var whiteList = ['http://localhost:3000', 'www.example.cn'];;
 
 // Connect to MongoDB
 const mongooseConnectionPromise = mongoose.connect(config.mongo.uri, config.mongo.options);

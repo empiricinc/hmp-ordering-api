@@ -30,6 +30,7 @@ export default function(app) {
 
     if(env === 'production') {
         app.use(favicon(path.join(config.root, 'client', 'favicon.ico')));
+        app.use(require('cors')());
     }
 
     app.set('appPath', path.join(config.root, 'client'));
