@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 import {registerEvents} from './driver.events';
+const Schema = mongoose.Schema;
+
 
 var DriverSchema = new mongoose.Schema({
   name: String,
