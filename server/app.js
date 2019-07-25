@@ -10,11 +10,13 @@ import mongoose from 'mongoose';
 mongoose.Promise = require('bluebird');
 import config from './config/environment';
 import http from 'http';
+var cors = require('node-cors');
+
 
 import expressConfig from './config/express';
 import registerRoutes from './routes';
 import seedDatabaseIfNeeded from './config/seed';
-
+var whiteList = ['www.example.com', 'www.example.cn'];;
 
 // Connect to MongoDB
 const mongooseConnectionPromise = mongoose.connect(config.mongo.uri, config.mongo.options);
@@ -25,6 +27,8 @@ mongoose.connection.on('error', function(err) {
 
 // Setup server
 var app = express();
+
+app.use(cors(whiteList))
 var server = http.createServer(app);
 
 expressConfig(app);
