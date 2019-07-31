@@ -205,6 +205,19 @@ export async function approve(req, res) {
         .then(respondWithResult(res))
         .catch(handleError(res));
 }
+
+export async function completeOrder(req, res) {
+    const orderdata = await Order.findById(req.params.id);
+    if(orderdata.isCompleted){
+        return req.send('order is already completed');
+    }
+    return Order.update({_id: req.params.id}, {
+        isCompleted:true,
+    }).exec()
+        .then(respondWithResult(res))
+        .catch(handleError(res));
+}
+
 export async function approveAll(req, res) {
     const orderdata = await Order.find({isApprove:false});
     
