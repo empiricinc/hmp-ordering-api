@@ -84,9 +84,15 @@ function handleError(res, statusCode) {
  **/
 // Gets a list of Orders
 export function index(req, res) {
-    const {isApprove=false} = req.query;
+    const {isApprove=false, isCompleted=false} = req.query;
 
-    return Order.find({isApprove})
+    var queryObject = {}
+    queryObject.isApprove = isApprove;
+    if(isCompleted) {
+    queryObject.isCompleted = isCompleted;
+    }
+
+    return Order.find(queryObject)
     .populate('order_items')
     .populate('documentation_team')
     .populate('quarantine_team')
