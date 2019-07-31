@@ -12,7 +12,7 @@ var OrderSchema = new mongoose.Schema({
   flight_date: String,
   carcase_weight: String,
   isApprove: Boolean,
-  isCompleted: Boolean,
+  isCompleted: {type: Boolean, default: false},
   documentation_team: { type: Schema.Types.ObjectId, ref: 'DocumentationDept' },
   production_team: { type: Schema.Types.ObjectId, ref: 'ProductionDept' },
   quarantine_team: { type: Schema.Types.ObjectId, ref: 'QuarantineDept' },
