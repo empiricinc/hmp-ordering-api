@@ -9,6 +9,7 @@ router.post('/', controller.create);
 router.put('/approve-all', controller.approveAll);
 router.put('/:id', controller.upsert);
 router.put('/approve/:id', controller.approve);
+router.put('/complete/:id', controller.completeOrder);
 router.patch('/:id', controller.patch);
 router.delete('/:id', controller.destroy);
 
