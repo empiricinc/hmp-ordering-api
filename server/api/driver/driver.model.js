@@ -8,7 +8,7 @@ var DriverSchema = new mongoose.Schema({
   phone: String,
   delivery_date:String,
   delivery_time:String,
-  status:String,
+  status:{type:String, default:'pending'},
   package_weight:Number,
   custom_weight:Number,
   order: { type: Schema.Types.ObjectId, ref: 'Order' },
