@@ -33,7 +33,7 @@
     "lodash-es": "^4.17.10",
     "lusca": "^1.4.1",
     "method-override": "^2.3.10",
-    "mongoose": "^5.1.5",
+    "mongoose": "^5.7.5",
     "morgan": "^1.9.0",
     "node-cors": "^1.0.0",
     "passport": "~0.4.0",
